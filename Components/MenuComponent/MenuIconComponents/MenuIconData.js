@@ -1,0 +1,47 @@
+export const MenuData =[
+    {
+    icon:require('../../../assets/menuTabIcons/footstep.png'),
+    text:'Footsteps',
+    navi:'FootStep'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/like.png'),
+    text:'Like!' ,
+    navi:'LikeStack'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/favorite.png'),
+    text:'Favorite',
+    navi:'FavoriteStack'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/mission.png'),
+    text:'Mission',
+    navi:'Misson'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/dailybonous.png'),
+    text:'Daily Bonus',
+    navi:'DailyBonus'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/configuration.png'),
+    text:'Configuration',
+    navi:'Configuration'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/news.png'),
+    text:'News',
+    navi:'Configuration'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/template.png'),
+    text:'Template',
+    navi:'Configuration'
+},
+    {
+    icon:require('../../../assets/menuTabIcons/contact.png'),
+    text:'Contact',
+    navi:'Configuration'
+},
+]

@@ -1,0 +1,17 @@
+export const Color ={
+    PRIMARY_COLOR:'#EE2A7B',
+    SECONDARY_COLOR:'#fff',
+    BLACK:'#000',
+    CARD_DATE:'#333D41D6',
+    CARD_TEXT:'#333D4182',
+    CARDNAME: '#333D41',
+    SEARCH_TEXT:'#0000004D',
+    INACTIVE_TOPBAR:'#00000054',
+    BACKGROUND_COLOR:'#FAFAFA'
+    // ACTIVE_TOPBAR:PRIMARY_COLOR,
+
+}
+
+export const FONT={
+    FONT_PRIMARY:"Quicksand"
+}

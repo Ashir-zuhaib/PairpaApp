@@ -1,15 +1,19 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet,Dimensions, Text, View, Image } from 'react-native';
 import Logo from '../../assets/pairpa.svg'
+// import logo from '../../assets/pairpa.png'
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from "@react-navigation/core"
 import { Color } from '../../Utils/colorfile';
+const WIDTH =Dimensions.get("window").width;
 export default function StartScreen() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
       <View style={{justifyContent:'center',alignItems:'center', flex:1}}>
-     <Logo width={140} height={100} fill={Color.PRIMARY_COLOR} />
+        {/* <Image source={logo} style={{height:300, width:400}} /> */}
+     <Logo width= {WIDTH*0.5} height={WIDTH/8}
+      fill={Color.PRIMARY_COLOR}/>
       </View>
      <View style={{height:300, alignItems:'center'}}>
      <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('StartScreen2')}>

@@ -7,21 +7,41 @@ import { Color } from '../../../Utils/colorfile';
 import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
 import useAuth from '../../../Hooks/useAuth';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const WIDTH =Dimensions.get("window").width;
 export default function NoRep() {
-    const [point, setPoint] = useState(0)
+    const [point, setPoint] = useState(null)
     const [list, setList] = useState([])
+    const [userId, setuserId] = useState()
   const navigation = useNavigation();
   const {user} = useAuth()
-  useEffect(()=>{
-      firestore().collection('Users').where( "userId" ,'!=', user)
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@userData')
+      const points = await AsyncStorage.getItem('@userPoint')
+      console.log('ff', jsonValue)
+      setuserId(jsonValue)
+      console.log('ffpoi', points)
+      setPoint( parseInt(points))
+      firestore().collection('Users').where( "userId" ,'!=', jsonValue)
       .onSnapshot(snap =>{
         //   console.log("users: ", snap.docs.map(do=>do.dat))
         const data = snap.docs.map(doc => doc.data())
-        // console.log('s',data)
+        // console.log('s',data.map((point, index)=>(
+        //   // console.log('sssd',point.point)
+        //   setPoint(point.point)
+        // )))
         setList(data)
       }) 
+    } catch(e) {
+      // error reading value
+      console.log(e)
+    }
+  }
+  useEffect(()=>{
+    getData()
+      
     },[])
 
   return (
@@ -40,13 +60,13 @@ export default function NoRep() {
               {/* <Text style={styles.msgText} >{data.text}</Text> */}
           </TouchableOpacity>
           {
-              point >= 5 ?
-          <TouchableOpacity onPress={()=>console.log('payment')} style={styles.reply}>
-              <Image source={rep} height={21} width={22.83}/>
-            </TouchableOpacity> 
-            :<TouchableOpacity onPress={()=>console.log('please get point !!')} style={styles.reply}>
+             point <=5 ?
+           <TouchableOpacity onPress={()=>console.log('please get point !!', typeof(point))} style={styles.reply}>
             <Image source={rep} height={21} width={22.83}/>
-          </TouchableOpacity>           
+          </TouchableOpacity>:             
+          <TouchableOpacity onPress={()=>navigation.navigate('ChatScreen' ,{recieverId: data.userId},)} style={styles.reply}>
+              <Image source={rep} height={21} width={22.83}/>
+            </TouchableOpacity>
           }
       </View>
           ))}

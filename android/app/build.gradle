@@ -271,6 +271,7 @@ dependencies {
     implementation project(path: ":@react-native-firebase_auth")
     implementation project(path: ':@react-native-firebase_firestore')
     implementation project(path: ':@react-native-async-storage')
+    implementation project(path: ":@react-native-firebase_storage")
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'

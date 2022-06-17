@@ -9,8 +9,17 @@ export const AuthProvider = ({children}) => {
   useEffect(() => {
     // getData()
     getData()
-    console.log('sd', sd)
-    // firestore().collection('Users').where('userId','==', sd).get()
+    
+  });
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@userData')
+      console.log('auth', jsonValue)
+      console.log(typeof(jsonValue))
+      setSd(jsonValue)
+      console.log('sd', sd)
+      //     firestore().collection('Users').where('userId','==', jsonValue).onSnapshot
+    // // get()
     // .then((querySnapshot) => {
     //   if(querySnapshot.size==0)
     //   {
@@ -23,13 +32,6 @@ export const AuthProvider = ({children}) => {
     // })}
     // })
     // .catch((e)=>console.log('err', e))
-    },[]);
-    const getData = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('@userData')
-        console.log('auth', jsonValue)
-        console.log(typeof(jsonValue))
-        setSd(jsonValue)
       } catch(e) {
         // error reading value
         console.log(e)

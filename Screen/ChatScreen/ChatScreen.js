@@ -1,3 +1,15 @@
+import { View, Text } from 'react-native'
+import React from 'react'
+
+const ChatScreen = () => {
+  return (
+    <View>
+      <Text>ChatScreen</Text>
+    </View>
+  )
+}
+
+export default ChatScreen
 // import React, { useState, useCallback, useEffect } from 'react'
 // import { GiftedChat, Bubble, InputToolbar } from 'react-native-gifted-chat'
 // import {View, Text, Image, LogBox} from 'react-native'
@@ -38,14 +50,13 @@
 //   }
 //   useEffect(() => {
 //   LogBox.ignoreLogs(['EventEmitter.removeListener'])
-//   // getAllMessages()
+//   getAllMessages()
 //   navigation.setOptions({
 //     title: (
 //       <View style={{backgroundColor:Color.PRIMARY_COLOR, flexDirection:'row', }}>
 //         <View style={{ marginLeft:-20}} >
 //         <Image source ={tempImg} style={{width:40, height:40, borderRadius:50 }}  />
 //         </View>
-//         {/* <View></View> */}
 //         <View style={{marginLeft:5 ,backgroundColor:Color.PRIMARY_COLOR,}}>
 //         <Text style={{color: '#fff', fontFamily: 'Arciform', fontSize: 16.5}}>
 //           {recieverId}
@@ -112,7 +123,7 @@
 //         : recieverId + '-' + user;
 
 //     firestore()
-//       .collection('users')
+//       .collection('Users')
 //       .doc(docid)
 //       .collection('messages')
 //       .add({...mymsg, createdAt: firestore.FieldValue.serverTimestamp()});

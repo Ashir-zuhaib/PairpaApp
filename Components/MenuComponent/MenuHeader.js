@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from 'react';
 // import notification from '../assets/notification21.png';
-// import air from '../../assets/maskgroup1.png'
+// import air from '../../assets/pairpa.png'
 import Logo from '../../assets/whitelogo.svg'
 import edit from '../../assets/edit.png'
 import setting from '../../assets/setting.png'
@@ -12,29 +12,35 @@ import AudioBtn from './VoiceCallToggle';
 import { Color } from '../../Utils/colorfile';
 import MapPin from '../../assets/pinmap.png'
 import genderM from '../../assets/genderM.png'
-// import DialogInput from 'react-native-dialog-input';
+import DialogInput from 'react-native-dialog-input';
 import useAuth from '../../Hooks/useAuth';
 import firestore from '@react-native-firebase/firestore';
+import storage from '@react-native-firebase/storage';
 const WIDTH =Dimensions.get("window").width;
-// import ImagePicker from '@react-native-image-picker';
+import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 function MenuHeader (props) {
   const [responseGallery, setResponseGallery] = useState({});
   const [visible, setVisible] = useState(false);
-  const [name, setName] = useState('no-name')
+  const [name, setName] = useState(null)
+  const [user1, setuser] = useState(null)
   const {user} = useAuth()
-  console.log('mee', user)
-  // const showDialog = () => {
-  //   setVisible(true);
-  // };
+  console.log('mee', user1)
+  const showDialog = () => {
+    setVisible(true);
+  };
 
-  // const handleCancel = () => {
-  //   setVisible(false);
-  // };
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
-  // const handleUpdate = async (inputText) => {
-  //     setVisible(false);
-  //     setName(inputText)
-  //   };
+  const handleUpdate = async (inputText) => {
+    firestore().collection('Users').doc(user1).update({
+            Name:inputText
+          })
+    setName(inputText)
+    setVisible(false);
+    };
 
 
     
@@ -43,19 +49,33 @@ function MenuHeader (props) {
   //       Name:name
   //     }) 
   //   }
-  
+  const getName = async ()=>{
+    try{
+      console.log('ggh',user1)
+      const valueId = await AsyncStorage.getItem('@userData')
+     await firestore().collection("Users").doc(valueId)
+     .onSnapshot((onSnapshot)=>{
+       console.warn('dataName',onSnapshot.exists)
+       console.log('na',onSnapshot.data().Name )
+       setName(onSnapshot.data())
+
+      })
+    }
+    catch(e){
+      console.warn('error', e)
+    }
+  }
       
-  // useEffect(()=>{
-  //   firestore().collection("users").doc(user).get()
-  //   .then((onSnapshot)=>{
-  //     console.log('dataName',onSnapshot.data().Name)
-  //     setName(onSnapshot.data().Name)
-  //   })
-  //     },[name])
+  useEffect(()=>{
+    
+    setuser(user)
+    getName()
+    getImage()
+      },[getImage])
   //     if(name!=='no-name')
   
-// const picker = ()=>{
-//   ImagePicker.launchImageLibrary(
+// const picker = async()=>{
+//   await ImagePicker.showImagePicker(
 //     {
 //       mediaType: 'photo',
 //       includeBase64: false,
@@ -63,13 +83,59 @@ function MenuHeader (props) {
 //       maxWidth: 200,
 //     },
 //     (response) => {
+//       console.log('Response = ', response)
 //       setResponseGallery(response);
 //       // console.log('uri', responseGallery.assets[0].uri)
 //     },
 //   )
 // }
-  // console.log('kk', responseGallery)
-  
+//   console.log('kk', responseGallery)
+const picker =()=>{
+  launchImageLibrary({
+           mediaType: 'photo',
+           includeBase64: false,
+           maxHeight: 200,
+           maxWidth: 200,
+         }, (response) => { // Use launchImageLibrary to open image gallery
+    console.log('Response = ', response);
+    
+    if (response.didCancel) {
+      console.log('User cancelled image picker');
+    } else if (response.error) {
+      console.log('ImagePicker Error: ', response.error);
+    } else if (response.customButton) {
+      console.log('User tapped custom button: ', response.customButton);
+    } else {
+      const source = { uri: response.assets[0].uri };
+      setResponseGallery(source.uri)
+      
+      // You can also display the image using data:
+      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+      
+      const reference = storage().ref(source.uri);
+      const task = reference.putFile(source.uri);
+      task.on('state_changed', taskSnapshot => {
+        console.log(`${taskSnapshot.bytesTransferred} transferred 
+        out of ${taskSnapshot.totalBytes}`);
+      });
+      task.then(() => {
+        console.log('Image uploaded to the bucket!');
+      });
+      console.log(source)
+    }
+  });}
+  const getImage = async()=>{
+    // var storage = firebase.storage();
+    const url = await storage().refFromURL('gs://pairpadashboard.appspot.com/file:/data/user/0/com.pairpa/cache/rn_image_picker_lib_temp_69f25e5b-ebfa-442a-bc21-4ec91519df68.jpg')
+    .getDownloadURL();
+    // reference.list({ pageToken }).then((result) => {
+    //   result.items.forEach((ref) => {
+    //     console.log("ref  ->>  ", JSON.stringify(ref));
+    //   });
+    setResponseGallery(url)
+    console.log('imzgd', url)
+
+  }
   return( 
     <>
   <View style={styles.heads}>   
@@ -77,7 +143,6 @@ function MenuHeader (props) {
       <Logo />
       <Text style={styles.text}>{props.value}</Text>
       <Notification height={34} />
-      {/* <Image source={notification} height={199} width={188} /> */}
      </View>
      <View style={styles.edit}>
          <View>
@@ -91,26 +156,26 @@ function MenuHeader (props) {
              {
                responseGallery.assets ?
                   <Image
-                   source={{uri: responseGallery.assets[0].uri}}
+                   source={{uri: responseGallery}}
                     style={{width:100,height:100, borderRadius:50}} />:
                     <Image source={pic} style={{width:100,height:100, borderRadius:50}} />
              }
            </TouchableOpacity>
               <TouchableOpacity 
-              // onPress={showDialog}
+              onPress={showDialog}
               >
-                <Text style={styles.nametext}>{name} <Image source={genderM} style={{position:'absolute',top:20}} width={11} height={11} /></Text>
+                <Text style={styles.nametext}>{name? name.Name : 'no-name'} <Image source={genderM} style={{position:'absolute',top:20}} width={11} height={11} /></Text>
                 </TouchableOpacity>   
             <Text style={styles.text}> 
             <Image source={MapPin} />Cibatak, Sukanumi, Jawa Barat</Text>
 </View>
-{/* <DialogInput isDialogVisible={visible}
+<DialogInput isDialogVisible={visible}
             title={"Enter Name"}
             // message={"Message for DialogInput #1"}
             hintInput ={"Enter your name"}
             submitInput={ (inputText) => {handleUpdate(inputText)} }
             closeDialog={ handleCancel}>
-</DialogInput> */}
+</DialogInput>
             <View>
             <View  style={styles.imagebox}>
                  <Image source={setting} />

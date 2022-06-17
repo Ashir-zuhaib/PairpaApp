@@ -7,12 +7,18 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useNavigation } from "@react-navigation/core"
 import { Color } from '../../Utils/colorfile';
 import Phone from '../../assets/phone.svg'
+// import logo from '../../assets/pairpa.png'
 const WIDTH =Dimensions.get("window").width;
 export default function StartScreen2() {
     const navigation = useNavigation();
   return (
     <View style={styles.container}>
-     <Logo width={WIDTH*0.25} fill={Color.PRIMARY_COLOR} />
+      <View style={{justifyContent:'center',alignItems:'center', flex:0.5}}>
+      {/* <Image source={logo} style={{height:100, width:400}} /> */}
+     <Logo width={WIDTH*0.25}  
+      fill={Color.PRIMARY_COLOR} 
+       />
+      </View>
      <StartImage   />
       <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('Login')}>
           <Text style={styles.text}>

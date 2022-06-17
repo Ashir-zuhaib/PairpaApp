@@ -1,13 +1,16 @@
-import { View,StyleSheet, Text,TextInput,Dimensions,TouchableOpacity } from 'react-native'
+import { View,StyleSheet,Image, Text,TextInput,Dimensions,TouchableOpacity } from 'react-native'
 import React,{useState, useRef} from 'react'
 import Logo from '../../assets/pairpa.svg'
+// import logo from '../../assets/pairpa.png'
 import { Color } from '../../Utils/colorfile';
 import PhoneInput from 'react-native-phone-number-input';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from "@react-navigation/core"
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const WIDTH = Dimensions.get('window').width;
 const Signup = () => {
+  const navigation = useNavigation();
     const [phoneNumber, setPhoneNumber] = useState('');
     const phoneInput = useRef(null);
     const [email, setEmail] = useState('')
@@ -24,15 +27,20 @@ const Signup = () => {
             const jsonValue = JSON.stringify(e.user.uid)
             await AsyncStorage.setItem('@userId', jsonValue)
             console.log('async', jsonValue)
-            firestore().collection('Users').doc().set(
+            firestore().collection('Users').doc(e.user.uid).set(
                 {
                     phoneNumber:phoneNumber,
                     email:email,
                     password:password,
                     userId: e.user.uid,
-                    status:firestore.FieldValue.serverTimestamp
+                    status:firestore.FieldValue.serverTimestamp,
+                    point:0,
+                    Name:null
                 }
-            ).then(()=>{console.log('data added')});
+            ).then(()=>{
+              console.log('data added')
+              navigation.navigate('Login')
+          });
           })
           .catch(error => {
               console.log(error)
@@ -48,7 +56,8 @@ const Signup = () => {
   return (
     <View style={styles.container}>
         <View style={styles.logo}>
-     <Logo width={120} height={80} fill={Color.PRIMARY_COLOR} />
+        <Logo width= {WIDTH*0.5} height={WIDTH/8}
+        fill={Color.PRIMARY_COLOR}/>
       </View>
       <View style={{flex:1, width:'80%'}}>
           <View >

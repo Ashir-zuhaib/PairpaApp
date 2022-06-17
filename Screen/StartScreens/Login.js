@@ -28,6 +28,7 @@ function PhoneSignIn() {
   const [confirm, setConfirm] = useState(null);
   const [code, setCode] = useState('');
   const [verifyNum, setVerifyNum]= useState('')
+  const [userId, setUserId] = useState('')
   const phoneInput = useRef(null);
   // Handle the button press
  function signInWithPhoneNumber() {
@@ -40,10 +41,7 @@ function PhoneSignIn() {
         
         querySnapshot.forEach(async(doc) => {            
               console.warn(doc.id, "=>", doc.data().phoneNumber);
-              setVerifyNum(doc.data().phoneNumber)
-              // const jsonValue = JSON.stringify(doc.data())
-              await AsyncStorage.setItem('@userData', doc.data().userId)
-              // console.log(jsonValue)
+              setUserId(doc.data().userId)
               //performing phone authentication
         const confirmation = await auth().signInWithPhoneNumber(doc.data().phoneNumber)
         
@@ -61,10 +59,10 @@ function PhoneSignIn() {
     try {
       //confirming otp
       await confirm.confirm(code);
+      await AsyncStorage.setItem('@userData', userId)
       // const jsonValue  =  AsyncStorage.getItem('@userData')
       // const int = jsonValue != null ? JSON.parse(jsonValue) : null;
-
-      getData()
+      await getData()
       //if otp success user auth data save in async storage
     } catch (error) {
       // const int = jsonValue != null ? JSON.parse(jsonValue) : null;
@@ -75,7 +73,8 @@ function PhoneSignIn() {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@userData')
-      console.log('ff', jsonValue)
+      console.log('checking bottomf', jsonValue)
+       navigation.navigate('BottomNavigator')
     } catch(e) {
       // error reading value
       console.log(e)
@@ -90,7 +89,7 @@ function PhoneSignIn() {
             goBack={navigation.goBack}
           />
         </View>
-        <View>
+        <View style={{flex:0.5}}>
           <StartImage1
             height={WIDTH / 2.9}
             width={WIDTH * 0.8}
@@ -223,6 +222,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: WIDTH * 0.7,
+    // flex:0.1
   },
   verifyphone: {
     color: Color.CARDNAME,
@@ -275,7 +275,7 @@ const OTPstyles = StyleSheet.create({
   back: {
     flex: 0.1,
     width: WIDTH * 0.2,
-    height: WIDTH / 2,
+    // height: WIDTH / 2,
     marginTop: 10,
     marginLeft: 15,
     alignSelf: 'flex-start',
@@ -316,6 +316,7 @@ const OTPstyles = StyleSheet.create({
   },
   logoBox: {
     width: WIDTH,
+    flex:0.4
   },
   logo: {
     alignSelf: 'center',
@@ -333,6 +334,7 @@ const OTPstyles = StyleSheet.create({
   },
   verifybox: {
     flexDirection: 'row',
+    // flex:1
   },
   verifytext: {
     textAlign: 'center',

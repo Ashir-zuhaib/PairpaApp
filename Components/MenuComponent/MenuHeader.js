@@ -20,7 +20,8 @@ const WIDTH =Dimensions.get("window").width;
 import {launchCamera, launchImageLibrary} from 'react-native-image-picker';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 function MenuHeader (props) {
-  const [responseGallery, setResponseGallery] = useState({});
+  const [responseGallery, setResponseGallery] = useState(null);
+  // const [selectImage, setSelectImage] = useState()
   const [visible, setVisible] = useState(false);
   const [name, setName] = useState(null)
   const [user1, setuser] = useState(null)
@@ -68,28 +69,10 @@ function MenuHeader (props) {
       
   useEffect(()=>{
     
+    getImage()
     setuser(user)
     getName()
-    getImage()
-      },[getImage])
-  //     if(name!=='no-name')
-  
-// const picker = async()=>{
-//   await ImagePicker.showImagePicker(
-//     {
-//       mediaType: 'photo',
-//       includeBase64: false,
-//       maxHeight: 200,
-//       maxWidth: 200,
-//     },
-//     (response) => {
-//       console.log('Response = ', response)
-//       setResponseGallery(response);
-//       // console.log('uri', responseGallery.assets[0].uri)
-//     },
-//   )
-// }
-//   console.log('kk', responseGallery)
+      },[])
 const picker =()=>{
   launchImageLibrary({
            mediaType: 'photo',
@@ -107,11 +90,6 @@ const picker =()=>{
       console.log('User tapped custom button: ', response.customButton);
     } else {
       const source = { uri: response.assets[0].uri };
-      setResponseGallery(source.uri)
-      
-      // You can also display the image using data:
-      // const source = { uri: 'data:image/jpeg;base64,' + response.data };
-      
       const reference = storage().ref(source.uri);
       const task = reference.putFile(source.uri);
       task.on('state_changed', taskSnapshot => {
@@ -154,7 +132,7 @@ const picker =()=>{
          <View  style={styles.imageProfile}>
            <TouchableOpacity  onPress={picker} style={styles.changeImage}>
              {
-               responseGallery.assets ?
+               responseGallery ? 
                   <Image
                    source={{uri: responseGallery}}
                     style={{width:100,height:100, borderRadius:50}} />:

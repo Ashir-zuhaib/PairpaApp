@@ -28,10 +28,6 @@ export default function NoRep() {
       .onSnapshot(snap =>{
         //   console.log("users: ", snap.docs.map(do=>do.dat))
         const data = snap.docs.map(doc => doc.data())
-        // console.log('s',data.map((point, index)=>(
-        //   // console.log('sssd',point.point)
-        //   setPoint(point.point)
-        // )))
         setList(data)
       }) 
     } catch(e) {

@@ -33,9 +33,10 @@ const Signup = () => {
                     email:email,
                     password:password,
                     userId: e.user.uid,
-                    status:firestore.FieldValue.serverTimestamp,
+                    status:firestore.FieldValue.serverTimestamp(),
                     point:0,
-                    Name:null
+                    Name:null,
+                    like:0
                 }
             ).then(()=>{
               console.log('data added')

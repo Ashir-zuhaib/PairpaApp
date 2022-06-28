@@ -1,12 +1,11 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { View } from 'react-native';
-import Navbar from '../../components/common/navbar/Navbar';
+import { Platform, View } from 'react-native';
 import {
   CometChatConversationListWithMessages,
   CometChatConversationList,
   CometChatUI,
-} from '../../view/cometchat-pro-react-ui-kit-master/CometChatWorkspace/src';
+} from '../../cometchat-pro-react-native-ui-kit-3/CometChatWorkspace/src';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { COMETCHAT_CONSTANTS } from '../../config/COMMET_CONSTANT';
 // import fire from '../../config/config';
@@ -30,8 +29,7 @@ export default function HostMessages({ navigation, route }) {
       CometChat.init(COMETCHAT_CONSTANTS.APP_ID, appSetting).then(
         () => {
           if (CometChat.setSource) {
-            CometChat.setSource('ui-kit', 'web', 'reactjs');
-
+            CometChat.setSource('ui-kit', Platform.OS, 'react-native');
             // console.log("OWN USER", userId)
 
             CometChat.login(CurrentUserId, COMETCHAT_CONSTANTS?.AUTH_KEY)
@@ -102,7 +100,7 @@ export default function HostMessages({ navigation, route }) {
   return (
     isInitialized && (
       <View>
-        <CometChatUI
+        <CometChatConversationListWithMessages
           conversationWith={recieverId}
         // chatWithUser={chatWithUser}
         />

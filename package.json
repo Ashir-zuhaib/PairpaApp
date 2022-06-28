@@ -10,7 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@cometchat-pro/chat": "^3.0.8",
     "@cometchat-pro/react-native-chat": "^3.0.8",
+    "@emotion/core": "^11.0.0",
+    "@emotion/react": "^11.9.3",
     "@react-native-async-storage/async-storage": "^1.17.6",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-firebase/app": "^14.11.0",
@@ -23,6 +26,9 @@
     "@react-navigation/native": "^6.0.10",
     "@react-navigation/stack": "^6.2.1",
     "@stripe/stripe-react-native": "^0.12.0",
+    "dateformat": "^5.0.3",
+    "emoji-mart": "^5.1.0",
+    "html-react-parser": "^2.0.0",
     "react": "17.0.2",
     "react-native": "0.68.2",
     "react-native-credit-card-input": "^0.4.1",
@@ -41,7 +47,8 @@
     "react-native-vector-icons": "^9.1.0",
     "react-native-webview": "^11.22.2",
     "tipsi-stripe": "^9.2.0",
-    "toggle-switch-react-native": "^3.3.0"
+    "toggle-switch-react-native": "^3.3.0",
+    "twemoji": "^14.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

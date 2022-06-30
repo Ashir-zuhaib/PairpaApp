@@ -1,6 +1,6 @@
 apply plugin: "com.android.application"
 apply plugin: 'com.google.gms.google-services'
-
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
 
@@ -276,14 +276,15 @@ dependencies {
 
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
-
+    // implementation 'com.cometchat:cometchat-pro-android-dependencies:2.4.3-beta1'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
     implementation project(path: ":@react-native-firebase_app")
     implementation project(path: ":@react-native-firebase_auth")
     implementation project(path: ':@react-native-firebase_firestore')
     implementation project(path: ':@react-native-async-storage')
     implementation project(path: ":@react-native-firebase_storage")
-
+// implementation 'com.github.MatrixFrog:Android-ScalableVideoView:v1.0.4-jitpack'
+implementation project(':react-native-vector-icons')
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
         exclude group:'com.facebook.fbjni'
     }

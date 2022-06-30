@@ -1,20 +1,32 @@
 /* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
-import { Platform, View } from 'react-native';
+import { Platform, View, KeyboardAvoidingView } from 'react-native';
 import {
   CometChatConversationListWithMessages,
   CometChatConversationList,
   CometChatUI,
-} from '../../cometchat-pro-react-native-ui-kit-3/CometChatWorkspace/src';
+  CometChatMessages,
+} from '../../cometchat-pro-react-native-ui-kit-3/index.js';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import { COMETCHAT_CONSTANTS } from '../../config/COMMET_CONSTANT';
 // import fire from '../../config/config';
 
 
 export default function HostMessages({ navigation, route }) {
-  const { recieverId } = route.params;
+  const { opdata } = route.params;
   const CurrentUserId = '4564564564646546';
   const [isInitialized, setIsInitialized] = useState(false);
+  const [user, setUser] = useState({
+    hasBlockedMe: false,
+    blockedByMe: false,
+    uid: 'superhero3',
+    name: 'Spiderman',
+    avatar: 'https://data-us.cometchat.io/assets/images/avatars/spiderman.png', lastActiveAt: 1614597611,
+    role: 'default',
+    status: 'offline',
+
+
+  });
   const [chatWithUser, setChatWithUser] = useState('');
   const [currentUserId, setCurrentUSERID] = useState('');
   const [tId, setTID] = useState('');
@@ -29,7 +41,7 @@ export default function HostMessages({ navigation, route }) {
       CometChat.init(COMETCHAT_CONSTANTS.APP_ID, appSetting).then(
         () => {
           if (CometChat.setSource) {
-            CometChat.setSource('ui-kit', Platform.OS, 'react-native');
+            CometChat.setSource('ui-kit', 'Android', 'react-native');
             // console.log("OWN USER", userId)
 
             CometChat.login(CurrentUserId, COMETCHAT_CONSTANTS?.AUTH_KEY)
@@ -99,10 +111,16 @@ export default function HostMessages({ navigation, route }) {
   console.log('Opposite USER', tId, 'OWN ID', CurrentUserId);
   return (
     isInitialized && (
-      <View>
-        <CometChatConversationListWithMessages
-          conversationWith={recieverId}
-        // chatWithUser={chatWithUser}
+      <View style={{ flex: 1 }}>
+        <CometChatMessages
+
+          type={'user'}
+          item={opdata}//The object will be of user or group depending on type
+          loggedInUser={CurrentUserId}
+          actionGenerated={(actionType) => {
+            console.log(actionType);
+          }}
+
         />
       </View>
     )

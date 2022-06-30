@@ -5,7 +5,7 @@ import org.apache.tools.ant.taskdefs.condition.Os
 buildscript {
     ext {
         buildToolsVersion = "31.0.0"
-        minSdkVersion = 21
+        minSdkVersion = 24
         compileSdkVersion = 31
         targetSdkVersion = 31
 
@@ -20,9 +20,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
-         maven {
-			url "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/"
-		}
+        //  maven {
+		// 	url "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/"
+		// }
     }
     dependencies {
         classpath("com.android.tools.build:gradle:7.0.4")
@@ -36,6 +36,14 @@ buildscript {
 
 allprojects {
     repositories {
+     jcenter() {
+            content {
+                includeModule("com.yqritc", "android-scalablevideoview")
+            }
+        }
+        maven {
+            url 'https://maven.google.com'
+        }
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url("$rootDir/../node_modules/react-native/android")
@@ -53,5 +61,8 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
+     maven {
+			url "https://dl.cloudsmith.io/public/cometchat/cometchat-pro-android/maven/"
+		}
     }
 }

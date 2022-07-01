@@ -15,9 +15,7 @@
 //     }),
 //   },
 // };
-const blacklist = require('metro-config/src/defaults/exclusionList');
 const { getDefaultConfig } = require('metro-config');
-
 module.exports = (async () => {
   const {
     resolver: { sourceExts, assetExts },

@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React, { useEffect, useState } from 'react';
 import {
   Dimensions,
@@ -17,6 +18,8 @@ import firestore from '@react-native-firebase/firestore';
 import { firebase } from '@react-native-firebase/auth';
 import useAuth from '../../../Hooks/useAuth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CometChat } from '@cometchat-pro/react-native-chat';
+import { COMETCHAT_CONSTANTS } from '../../../config/COMMET_CONSTANT';
 
 const WIDTH = Dimensions.get('window').width;
 export default function NoRep() {
@@ -50,21 +53,74 @@ export default function NoRep() {
     getData();
   }, []);
 
+  const OnClickChat = (id) => {
+    console.log('CLCIK', id);
+    var appSetting = new CometChat.AppSettingsBuilder()
+      .subscribePresenceForAllUsers()
+      .setRegion(COMETCHAT_CONSTANTS.REGION)
+      .build();
+
+    CometChat.init(COMETCHAT_CONSTANTS.APP_ID, appSetting).then(
+      () => {
+        if (CometChat.setSource) {
+          CometChat.setSource('ui-kit', 'Android', 'react-native');
+          // console.log("OWN USER", userId)
+
+          CometChat.login(id, COMETCHAT_CONSTANTS?.AUTH_KEY)
+            .then(c_user => {
+              navigation.navigate('ChatScreen', {
+                opdata: c_user,
+              });
+            })
+            .catch(error => {
+              if (error.code === 'ERR_UID_NOT_FOUND') {
+                console.log('Error', error.code);
+                const uid = id;
+                // console.log("UID", uid)
+                let name = 'NEW USER';
+                let image = require('../../../assets/image10.png');
+                var user = new CometChat.User(uid);
+                user.setName(name);
+                // if (image) {
+                //   user.setAvatar(image);
+                // }
+                CometChat.createUser(
+                  user,
+                  COMETCHAT_CONSTANTS?.AUTH_KEY,
+                ).then(
+                  c_user => {
+                    CometChat.login(
+                      id,
+                      COMETCHAT_CONSTANTS?.AUTH_KEY,
+                    ).then(user_ => {
+                      navigation.navigate('ChatScreen', {
+                        opdata: user_,
+                      });
+                      console.log('LOGIN', user_);
+                    });
+                  },
+                  c_error => {
+                    console.log('ERROR', c_error);
+                  },
+                );
+              }
+            });
+        }
+      },
+      error => { },
+    );
+  };
   return (
     <ScrollView>
       {list.map((data, index) => (
         <View style={styles.card} key={index}>
           <TouchableOpacity style={styles.border}>
-            {/* <Image source={} style={styles.image} /> */}
+            <Image source={data.image} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={() =>
-              navigation.navigate('ChatScreen', { recieverId: data.userId })
-            }
-            style={styles.text}>
-            <Text style={styles.nameColor}>{data.userId.slice(0, 15)}</Text>
-            {/* <Text style={styles.messColor}>{data.date}</Text> */}
-            {/* <Text style={styles.msgText} >{data.text}</Text> */}
+          <TouchableOpacity onPress={() => OnClickChat(data.userId)} style={styles.text}>
+            <Text style={styles.nameColor}>{data.username}</Text>
+            <Text style={styles.messColor}>{data.date}</Text>
+            <Text style={styles.msgText} >{data.text}</Text>
           </TouchableOpacity>
           {point <= 5 ? (
             <TouchableOpacity
@@ -74,9 +130,7 @@ export default function NoRep() {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity
-              onPress={() =>
-                navigation.navigate('ChatScreen', { recieverId: data.userId })
-              }
+              onPress={() => OnClickChat(data.userId)}
               style={styles.reply}>
               <Image source={rep} height={21} width={22.83} />
             </TouchableOpacity>

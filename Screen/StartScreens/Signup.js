@@ -36,7 +36,8 @@ const Signup = () => {
                     status:firestore.FieldValue.serverTimestamp(),
                     point:0,
                     Name:null,
-                    like:0
+                    like:0,
+                    likeBy:[]
                 }
             ).then(()=>{
               console.log('data added')

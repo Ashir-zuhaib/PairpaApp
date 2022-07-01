@@ -7,76 +7,184 @@ import { Color } from '../../../Utils/colorfile';
 import { useEffect,useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import firestore from '@react-native-firebase/firestore';
-// import { set } from 'react-native-reanimated';
+import useAuth from '../../../Hooks/useAuth';
 const WIDTH =Dimensions.get("window").width;
 const HEIGHT=Dimensions.get("window").height;
 export default function NoRep() {
     const [list, setList] = useState([])
-    const [count, setCount] = useState(0)
-    // const[li,setli] = useState(count)
+    const [likeList, setLikeList] = useState([])
+    
+    const[li,setli] = useState([])
     const [myUid, setUid] = useState(null)
+    const{user}= useAuth()
     useEffect(()=>{
-        getData();
-        CurrentUserData()
-    },[CurrentUserData])
-   
+        getData();        
+        // LikedUser();
+    },[])
+    
     const getData = async () => {
     try {
         const jsonValue = await AsyncStorage.getItem('@userData')
         setUid(jsonValue)
         await firestore().collection('Users').where( "userId" ,'!=', jsonValue)
         .onSnapshot(snap =>{
-        const data = snap.docs.map(doc => doc.data())
-        // console.log('like Data', data)
-        setList(data)
-      }) 
-    } catch(e) {
-      // error reading value
-      console.log(e)
-    }
+        const data1 = snap.docs.map(doc =>doc.data())
+        
+        console.log('like Data', data1)
+        setList(data1)
+        // data1.map((data)=>(
+        
+
+//     //     data1.map( async(data)=> {
+//     //         try{
+//     //            const docId = jsonValue > data.userId ?
+//     //            jsonValue + '-' + data.userId:
+//     //            data.userId + '-' + jsonValue
+//     //         // const jsonValue = await AsyncStorage.getItem('@userData')
+//     //         await firestore().collection('Likes')
+//     // // .where("likeTo", "!=", data.userId)
+//     // .where("docId", "!=", docId)
+//     //     .onSnapshot(snap =>{
+//     //        if(snap.size==0){
+//     //        console.log('not available') 
+//     //        }
+//     //        else{
+//     //            const dataByLikedto = snap.docs.map(doc =>doc.data())
+//     //            // console.log('liked user', snap.docs.map(doc =>doc.data()))
+//     //            console.log(dataByLikedto)
+//     //            setLikeList(dataByLikedto)
+//     //        }
+        
+            
+//     //   })
+//     // }   
+//     //  catch(e) {
+//     //   // error reading value
+//     //   console.log(e)
+//     // }
+
+// })
+
+})}
+catch(e){console.log(e.code)}
+        }
+//   const LikedUser = async ()=>{
+//     list.map( async(data)=> {
+//     try{
+//     // const jsonValue = await AsyncStorage.getItem('@userData')
+//     await firestore().collection('Likes')
+//     // .where("likeTo", "!=", data.userId)
+//     .where("likeTo", "!=", data.userId)
+//         .onSnapshot(snap =>{
+//             // console.log(snap)
+//         const dataByLikedto = snap.docs.map(doc =>doc.data())
+//         console.log('liked user', snap.docs.map(doc =>doc.data()))
+//         setLikeList(dataByLikedto)
+        
+//         // const LikedTo = dataByLikedto.map((doc)=>  doc.likeTo)
+//         // console.log('dd', LikedTo)
+        
+// //         const docId = data.map((doc)=>  doc.docId)
+// //           LikedTo.map((liketo)=>{
+// //             console.log('check', docId)
+// //             const docmd = user +'-'+liketo
+// //          firestore().collection('Likes').where("docId", "==", docmd ).where("likeTo", "!=", liketo ). onSnapshot
+// //             // get()
+// //             ((querySnapshot) => {
+// //                 if(querySnapshot== null)
+// //                 {
+// //                   console.log('failed', querySnapshot)
+
+// //                   const removeLiked = list.pop(liketo)
+// //                   console.log(removeLiked)
+// //                   removeLiked == undefined ? 'no user': setList(lim)
+// //                  }
+// //                  else{
+// //                     querySnapshot.forEach(async(doc) => {            
+// //                       console.log(doc.id, "=>", doc.data().likeTo);
+// //                     //   setPoint(doc.data().point)
+// //                     //   console.log('oipnt', doc.data().likeTo)
+                      
+// //                   })}
+//                 // })
+// //             // .catch((e)=>{console.log('error',e)})
+//     })
+//     // .then(()=>console.log('no likes'))
+//     // .catch((e)=>console.log(e.code))
+           
+// //         setli(data)
+//     // })
+// }
+// catch(e){console.log(e.code)}
+//   })
+// }
+// const RemoveLiked= async() =>{
+    // console.log('remov', li)
+    // if(list.forEach((doc)=>doc.)){
+    //   const recId =  list.map((doc)=>  doc.userId)
+    //   const LikedBy = li.map((doc)=>  doc.likeBy)
+      
+  const UpdateLike = async (RId,like)=>{
     
-  }
-  const CurrentUserData = async ()=>{
-    try{
     const jsonValue = await AsyncStorage.getItem('@userData')
-        
-   await firestore().collection('Users').doc(jsonValue)
-    .onSnapshot((doc)=>{
-        setCount(doc.data().like)
-        console.log('like', doc.data().like)
+    const docId = jsonValue > RId
+    ? jsonValue + '-' + RId
+    : RId + '-' + jsonValue
+    await firestore().collection('Users').doc(RId).update({
+        // likeTo: RId,
+        // likeBy: jsonValue,
+        // Since: firestore.FieldValue.serverTimestamp(),
+        // docId: docId,
+        likeBy: jsonValue
+
     })
-        
-    }
-    catch(e) {console.log(e)}
-  }
-//   const UpdateLike = async (RId)=>{
-// console.log('userdata', RId)
-// // setli()
-//     const jsonValue = await AsyncStorage.getItem('@userData')
-//     const docId = jsonValue>RId
-//     ? jsonValue + '-' + RId
-//     : RId + '-' + jsonValue
-//     setli(count +1)
-//     await firestore().collection('Likes').doc(docId).collection('like').add({
-//         likeTo: RId,
-//         likeBy: jsonValue,
-//         Since: firestore.FieldValue.serverTimestamp(),
-//     })
-//     .then(async()=>{
-//         console.log('ssd',li)
-//         await firestore().collection('Users').doc(RId).update({
-//             like: li
-//     })
-//     })
+    .then(async()=>{
+        await firestore().collection('Users').doc(RId).update({
+            like: likeBy.length
+    })
+    .catch(e=>{
+        console.log(e.code)
+    })
+    
+    })
     
     
-//     .catch((e)=>console.log('err',e))
-//     console.log(li)
+    .catch((e)=>console.log('err',e))
+    // console.log(li)
    
-//   }
+  }
   return (
-    <ScrollView>
+    // likeList != []?
+    // <ScrollView>
+    //   {likeList.map((data, index)=>(
+    //     data.docId != user+'-'+ data.likeTo ?
+    //   <View style={styles.card} key={index}>
+    //       <View style={styles.border}>
+
+    //       {/* <Image source={data.image} style={styles.image} /> */}
+    //       </View>
+    //           <View style={styles.text}>    
+    //           <Text style={styles.nameColor}>{data.likeTo.slice(0,15)}</Text>
+    //           <Text style={styles.messColor}>21Years , jakarta</Text>
+    //           <Text style={{color:'#D3D3D3', fontSize:12}} >here is message</Text>
+    //          { firestore().collection('Likes').doc(user+ '-'+data.likeTo)?
+    //         //   data.userId == user?  
+    //         <TouchableOpacity
+    //         onPress={()=>UpdateLike(data.likeTo,)}
+    //         style={styles.buttonStyle}><Text style={styles.btnText}>Like! do</Text></TouchableOpacity>:
+    //     <TouchableOpacity
+    //     disabled={true}
+    //     style={styles.buttonStyle}><Text style={styles.btnText}>Liked</Text></TouchableOpacity>
+    // }
+    //       </View>
+    //       <TouchableOpacity style={styles.repicon}><Image source={rep} /></TouchableOpacity>              
+    //   </View>: null
+    //       )) } 
+    //           </ScrollView>
+    //           :
+              <ScrollView>
       {list.map((data, index)=>(
+        data.userId != user+'-'+ data.userId ?
       <View style={styles.card} key={index}>
           <View style={styles.border}>
 
@@ -86,14 +194,19 @@ export default function NoRep() {
               <Text style={styles.nameColor}>{data.userId.slice(0,15)}</Text>
               <Text style={styles.messColor}>21Years , jakarta</Text>
               <Text style={{color:'#D3D3D3', fontSize:12}} >here is message</Text>
-
-              <TouchableOpacity
-              onPress={()=>UpdateLike(data.userId)}
-              style={styles.buttonStyle}><Text style={styles.btnText}>Like! do</Text></TouchableOpacity>
+             { firestore().collection('Likes').doc(user+ '-'+data.userId)?
+            //   data.userId == user?  
+            <TouchableOpacity
+            onPress={()=>UpdateLike(data.userId,)}
+            style={styles.buttonStyle}><Text style={styles.btnText}>Like! do</Text></TouchableOpacity>:
+        <TouchableOpacity
+        disabled={true}
+        style={styles.buttonStyle}><Text style={styles.btnText}>Liked</Text></TouchableOpacity>
+    }
           </View>
           <TouchableOpacity style={styles.repicon}><Image source={rep} /></TouchableOpacity>              
-      </View>
-          ))}
+      </View>: null
+          )) } 
               </ScrollView>
   );
 }

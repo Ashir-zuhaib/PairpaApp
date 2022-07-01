@@ -14,11 +14,9 @@ export const AuthProvider = ({children}) => {
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@userData')
-      console.log('auth', jsonValue)
-      console.log(typeof(jsonValue))
       setSd(jsonValue)
       console.log('sd', sd)
-      //     firestore().collection('Users').where('userId','==', jsonValue).onSnapshot
+    //       firestore().collection('Users').where('userId','!=', jsonValue).onSnapshot
     // // get()
     // .then((querySnapshot) => {
     //   if(querySnapshot.size==0)
@@ -27,8 +25,8 @@ export const AuthProvider = ({children}) => {
     //    }
     // else{
     //   querySnapshot.forEach(async(doc) => {            
-    //     console.warn(doc.id, "=>", doc.data().phoneNumber);
-    //     setFuser(doc.data().userId)
+    //     console.warn(doc.id, "=>", doc.data().like);
+    //     setFuser(doc.data().like)
     // })}
     // })
     // .catch((e)=>console.log('err', e))
@@ -42,6 +40,7 @@ export const AuthProvider = ({children}) => {
     <AuthContext.Provider
       value={{
         user: sd, //storing user value in context api
+        // like: fuser
       }}>
       {children}
     </AuthContext.Provider>

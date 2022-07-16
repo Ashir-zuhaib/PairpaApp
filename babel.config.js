@@ -7,13 +7,6 @@
 
 module.exports = {
   presets: ['module:metro-react-native-babel-preset'],
-<<<<<<< HEAD
-  // plugins: ['react-native-reanimated/plugin'],
-  plugins: [
-    'react-native-reanimated/plugin',
-],
-  };
-=======
   plugins: [
     [
       '@babel/plugin-transform-runtime',
@@ -28,4 +21,3 @@ module.exports = {
     'react-native-reanimated/plugin',
   ],
 };
->>>>>>> 30b9345d93263c883b54d91c7c20114a0ffff6f5

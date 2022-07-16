@@ -28,6 +28,7 @@ export default function NoRep() {
   const [userId, setuserId] = useState();
   const navigation = useNavigation();
   const { user } = useAuth();
+  const [otherName, setOtherName] = useState(null)
   const getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@userData');
@@ -77,7 +78,7 @@ export default function NoRep() {
                 console.log('Error', error.code);
                 const uid = id;
                 // console.log("UID", uid)
-                let name = 'NEW USER';
+                let name = 'Ashir';
                 let image = require('../../../assets/image10.png');
                 var user = new CometChat.User(uid);
                 user.setName(name);
@@ -93,6 +94,7 @@ export default function NoRep() {
                       id,
                       COMETCHAT_CONSTANTS?.AUTH_KEY,
                     ).then(user_ => {
+                      console.log(user_)
                       navigation.navigate('ChatScreen', {
                         opdata: user_,
                       });

@@ -34,16 +34,18 @@ const StackNavigation =  () => {
       {user ? ( //checking if user signed in or not 
         <> 
         <Stack.Screen name="BottomNavigator" component={BottomNavigator} options={{ headerShown: false}} />
-        <Stack.Screen name="ChatScreen" component={ChatScreen} options={{
-          title: 'Chat',
-          headerStyle: {
-            backgroundColor: Color.PRIMARY_COLOR,
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}  />
+        <Stack.Screen name="ChatScreen" component={ChatScreen} options={{headerShown:false}}
+        //  options={{
+        //   title: 'Chat',
+        //   headerStyle: {
+        //     backgroundColor: Color.PRIMARY_COLOR,
+        //   },
+        //   headerTintColor: '#fff',
+        //   headerTitleStyle: {
+        //     fontWeight: 'bold',
+        //   },
+        // }}
+          />
         <Stack.Screen name="PricingScreen" component={PricingScreen} options={{
           title: 'Select Pricing',
           headerTitleAlign:'center',

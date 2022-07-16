@@ -10,15 +10,10 @@
     "lint": "eslint ."
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@cometchat-pro/chat": "^3.0.6",
-    "@cometchat-pro/react-native-chat": "^3.0.6",
-=======
     "@babel/plugin-proposal-export-namespace-from": "^7.18.6",
     "@cometchat-pro/chat": "^3.0.8",
     "@cometchat-pro/react-native-calls": "^2.2.0",
     "@cometchat-pro/react-native-chat": "^3.0.8",
->>>>>>> 30b9345d93263c883b54d91c7c20114a0ffff6f5
     "@emotion/core": "^11.0.0",
     "@emotion/react": "^11.9.3",
     "@react-native-async-storage/async-storage": "^1.17.7",
@@ -27,12 +22,8 @@
     "@react-native-firebase/auth": "^14.11.0",
     "@react-native-firebase/firestore": "^14.11.0",
     "@react-native-firebase/storage": "^14.11.0",
-<<<<<<< HEAD
-    "@react-navigation/bottom-tabs": "^6.2.1",
-=======
     "@react-native-picker/picker": "^2.4.2",
     "@react-navigation/bottom-tabs": "^6.3.1",
->>>>>>> 30b9345d93263c883b54d91c7c20114a0ffff6f5
     "@react-navigation/core": "^6.2.1",
     "@react-navigation/material-top-tabs": "^6.2.1",
     "@react-navigation/native": "^6.0.10",
@@ -52,6 +43,7 @@
     "react-native-event-listeners": "^1.0.7",
     "react-native-fast-image": "^8.5.11",
     "react-native-gesture-handler": "^2.4.2",
+    "react-native-gifted-chat": "^1.0.1",
     "react-native-image-picker": "^4.8.4",
     "react-native-keep-awake": "^4.0.0",
     "react-native-pager-view": "^5.4.24",
@@ -65,38 +57,14 @@
     "react-native-swipe-list-view": "^3.2.9",
     "react-native-tab-view": "^3.1.1",
     "react-native-vector-icons": "^9.1.0",
-<<<<<<< HEAD
-    "react-native-webview": "^11.22.2",
-=======
     "react-native-video": "^5.2.0",
     "react-native-video-controls": "^2.7.1",
     "react-native-webview": "^11.14.1",
     "reanimated-bottom-sheet": "^1.0.0-alpha.22",
->>>>>>> 30b9345d93263c883b54d91c7c20114a0ffff6f5
     "rn-fetch-blob": "^0.12.0",
     "tipsi-stripe": "^9.2.0",
     "toggle-switch-react-native": "^3.3.0",
-    "@cometchat-pro/react-native-calls": "2.1.1",
-    "@react-native-picker/picker": "^2.2.1",
-    "emoji-mart-native": "^0.6.2-beta",
-    "prop-types": "^15.7.2",
-    "react-native-autolink": "^4.0.0",
-    "react-native-fetch-blob": "^0.10.8",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "rn-fetch-blob": "^0.12.0",
-    "react-native-document-picker": "^7.1.3",
-    "react-native-elements": "^3.0.0-alpha.1",
-    "react-native-fast-image": "^8.3.4",
-    "react-native-keep-awake": "^4.0.0",
-    "react-native-reanimated": "^1.13.2",
-    "react-native-sound": "^0.11.0",
-    "react-native-swipe-list-view": "^3.2.8",
-    "react-native-video": "^5.1.0-alpha8",
-    "react-native-video-controls": "^2.7.1",
-    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "twemoji": "^14.0.2"
-
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

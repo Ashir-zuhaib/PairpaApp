@@ -17,13 +17,7 @@ import io.invertase.firebase.auth.ReactNativeFirebaseAuthPackage;
 import io.invertase.firebase.firestore.ReactNativeFirebaseFirestorePackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import io.invertase.firebase.storage.ReactNativeFirebaseStoragePackage;
-<<<<<<< HEAD
-import com.facebook.react.bridge.JSIModulePackage; // <- add
-  import com.swmansion.reanimated.ReanimatedJSIModulePackage; // <- add
-
-=======
 import com.oblador.vectoricons.VectorIconsPackage;
->>>>>>> 30b9345d93263c883b54d91c7c20114a0ffff6f5
 public class MainApplication extends Application implements ReactApplication {
 
   private final ReactNativeHost mReactNativeHost =
